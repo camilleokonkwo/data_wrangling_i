@@ -46,3 +46,102 @@ litters_df_abs =
 litters_df_abs =
   janitor::clean_names(litters_df_abs)
 ```
+
+Learning Assessment: loading the `FAS_pups.csv` dataset Using an
+relative path:
+
+``` r
+pups_df =
+  read_csv("data/FAS_pups.csv")
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df =
+  janitor::clean_names(pups_df)
+```
+
+Absolute Path:
+
+``` r
+pups_df_abs =
+  read_csv("~/Desktop/Fall 2023/Data Science I/building blocks R studio/data_wrangling_i/data/FAS_pups.csv")
+ 
+pups_df_abs =
+  janitor::clean_names(pups_df_abs)
+```
+
+## look at the data
+
+``` r
+litters_df
+```
+
+    ## # A tibble: 49 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2             27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 Con8  #3/83/3-3             NA          NA            20               9
+    ##  9 Con8  #2/95/3               NA          NA            20               8
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ## # ℹ 39 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+head(litters_df)
+```
+
+    ## # A tibble: 6 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                 19.7        34.7          20               3
+    ## 2 Con7  #1/2/95/2           27          42            19               8
+    ## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## 4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ## 5 Con7  #4/2/95/3-3         NA          NA            20               6
+    ## 6 Con7  #2/2/95/3-2         NA          NA            20               6
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+tail(litters_df)
+```
+
+    ## # A tibble: 6 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Low8  #79                 25.4        43.8          19               8
+    ## 2 Low8  #100                20          39.2          20               8
+    ## 3 Low8  #4/84               21.8        35.2          20               4
+    ## 4 Low8  #108                25.6        47.5          20               8
+    ## 5 Low8  #99                 23.5        39            20               6
+    ## 6 Low8  #110                25.5        42.7          20               7
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+You cab use `view` to see the entire dataset
+
+``` r
+litters_df
+view(litters_df)
+```
+
+Look at a data summary
+
+``` r
+str(litters_df)
+
+skimr::skim(litters_df)
+```

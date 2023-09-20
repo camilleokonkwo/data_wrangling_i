@@ -27,4 +27,44 @@ litters_df_abs =
 litters_df_abs =
   janitor::clean_names(litters_df_abs)
 ``` 
-  
+
+Learning Assessment: loading the `FAS_pups.csv` dataset 
+  Using an relative path: 
+```{r}
+pups_df =
+  read_csv("data/FAS_pups.csv")
+
+pups_df =
+  janitor::clean_names(pups_df)
+```   
+ 
+ Absolute Path: 
+```{r, eval = FALSE}
+pups_df_abs =
+  read_csv("~/Desktop/Fall 2023/Data Science I/building blocks R studio/data_wrangling_i/data/FAS_pups.csv")
+ 
+pups_df_abs =
+  janitor::clean_names(pups_df_abs)
+``` 
+
+## look at the data
+```{r}
+litters_df
+
+head(litters_df)
+
+tail(litters_df)
+``` 
+
+You cab use `view` to see the entire dataset
+```{r, eval = FALSE}
+litters_df
+view(litters_df)
+``` 
+
+Look at a data summary
+```{r, eval = FALSE}
+str(litters_df)
+
+skimr::skim(litters_df)
+``` 
