@@ -145,3 +145,49 @@ str(litters_df)
 
 skimr::skim(litters_df)
 ```
+
+## Options in `read_*`
+
+``` r
+litters_df =
+  read_csv("data/FAS_litters.csv", 
+           skip = 10, col_names = FALSE)
+```
+
+    ## Rows: 40 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): X1, X2
+    ## dbl (6): X3, X4, X5, X6, X7, X8
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Look at NA values.
+
+``` r
+litters_df =
+  read_csv("data/FAS_litters.csv", 
+           na = c("NA", 19))
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Column types
+
+``` r
+litters_df =
+  read_csv("data/FAS_litters.csv", 
+           col_types =
+             cols(
+               `GD0 weight` = col_character()
+               
+             ))
+```
