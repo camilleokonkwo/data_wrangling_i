@@ -1,0 +1,66 @@
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+
+  
+Let's import the `FAS_litters.csv` csv using a relative path. 
+  
+```{r}
+litters_df =
+  read_csv("data/FAS_litters.csv")
+
+litters_df =
+  janitor::clean_names(litters_df)
+``` 
+
+```{r}
+select(litters_df, group, litter_number, gd0_weight)
+
+select(litters_df, group:gd_of_birth)
+
+select(litters_df, pups_survive)
+
+select(litters_df, -starts_with("pups"))
+
+select(litters_df, -litter_number)
+
+select(litters_df, -starts_with("gd"))
+
+select(litters_df, group, litter_id = litter_number)
+
+select(litters_df, group, litter_id = litter_number, everything())
+
+select(litters_df, gd0_weight, everything())
+```
+
+
+```{r}
+rename(litters_df, litter_id = litter_number)
+
+relocate(litters_df, litter_number)
+```
+
+`select` vs `pull`
+
+```{r}
+select(litters_df, group)
+pull(litters_df, group)
+```
+
+
+Learning Assessment: In the pups data, select the columns containing litter number, sex, and PD ears. 
+
+```{r}
+pups_df =
+  read_csv("data/FAS_pups.csv")
+
+pups_df =
+  janitor::clean_names(pups_df)
+
+select(pups_df, litter_number, sex, pd_ears)
+```
+
