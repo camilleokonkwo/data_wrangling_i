@@ -16,12 +16,8 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
-``` r
-library(readxl)
-library(haven)
-```
-
-Let’s import the `FAS_litters.csv` csv using a relative path.
+Let’s import the `FAS_litters.csv` and `FAS_pups.csv` using a relative
+path.
 
 ``` r
 litters_df =
@@ -40,7 +36,28 @@ litters_df =
 ``` r
 litters_df =
   janitor::clean_names(litters_df)
+
+pups_df =
+  read_csv("data/FAS_pups.csv")
 ```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df =
+  janitor::clean_names(pups_df)
+```
+
+## `select`
+
+\`select is used to select columns!
 
 ``` r
 select(litters_df, group, litter_number, gd0_weight)
@@ -62,60 +79,60 @@ select(litters_df, group, litter_number, gd0_weight)
     ## # ℹ 39 more rows
 
 ``` r
-select(litters_df, group:gd_of_birth)
+select(litters_df, gd0_weight, group)
 ```
 
-    ## # A tibble: 49 × 5
-    ##    group litter_number   gd0_weight gd18_weight gd_of_birth
-    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>
-    ##  1 Con7  #85                   19.7        34.7          20
-    ##  2 Con7  #1/2/95/2             27          42            19
-    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19
-    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19
-    ##  5 Con7  #4/2/95/3-3           NA          NA            20
-    ##  6 Con7  #2/2/95/3-2           NA          NA            20
-    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20
-    ##  8 Con8  #3/83/3-3             NA          NA            20
-    ##  9 Con8  #2/95/3               NA          NA            20
-    ## 10 Con8  #3/5/2/2/95           28.5        NA            20
+    ## # A tibble: 49 × 2
+    ##    gd0_weight group
+    ##         <dbl> <chr>
+    ##  1       19.7 Con7 
+    ##  2       27   Con7 
+    ##  3       26   Con7 
+    ##  4       28.5 Con7 
+    ##  5       NA   Con7 
+    ##  6       NA   Con7 
+    ##  7       NA   Con7 
+    ##  8       NA   Con8 
+    ##  9       NA   Con8 
+    ## 10       28.5 Con8 
     ## # ℹ 39 more rows
 
 ``` r
-select(litters_df, pups_survive)
+select(litters_df, group, gd0_weight:gd_of_birth)
 ```
 
-    ## # A tibble: 49 × 1
-    ##    pups_survive
-    ##           <dbl>
-    ##  1            3
-    ##  2            7
-    ##  3            5
-    ##  4            4
-    ##  5            6
-    ##  6            4
-    ##  7            9
-    ##  8            8
-    ##  9            8
-    ## 10            8
+    ## # A tibble: 49 × 4
+    ##    group gd0_weight gd18_weight gd_of_birth
+    ##    <chr>      <dbl>       <dbl>       <dbl>
+    ##  1 Con7        19.7        34.7          20
+    ##  2 Con7        27          42            19
+    ##  3 Con7        26          41.4          19
+    ##  4 Con7        28.5        44.1          19
+    ##  5 Con7        NA          NA            20
+    ##  6 Con7        NA          NA            20
+    ##  7 Con7        NA          NA            20
+    ##  8 Con8        NA          NA            20
+    ##  9 Con8        NA          NA            20
+    ## 10 Con8        28.5        NA            20
     ## # ℹ 39 more rows
 
 ``` r
-select(litters_df, -starts_with("pups"))
+select(litters_df, group, starts_with("pups"))
 ```
 
-    ## # A tibble: 49 × 5
-    ##    group litter_number   gd0_weight gd18_weight gd_of_birth
-    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>
-    ##  1 Con7  #85                   19.7        34.7          20
-    ##  2 Con7  #1/2/95/2             27          42            19
-    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19
-    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19
-    ##  5 Con7  #4/2/95/3-3           NA          NA            20
-    ##  6 Con7  #2/2/95/3-2           NA          NA            20
-    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20
-    ##  8 Con8  #3/83/3-3             NA          NA            20
-    ##  9 Con8  #2/95/3               NA          NA            20
-    ## 10 Con8  #3/5/2/2/95           28.5        NA            20
+    ## # A tibble: 49 × 4
+    ##    group pups_born_alive pups_dead_birth pups_survive
+    ##    <chr>           <dbl>           <dbl>        <dbl>
+    ##  1 Con7                3               4            3
+    ##  2 Con7                8               0            7
+    ##  3 Con7                6               0            5
+    ##  4 Con7                5               1            4
+    ##  5 Con7                6               0            6
+    ##  6 Con7                6               0            4
+    ##  7 Con7                9               0            9
+    ##  8 Con8                9               1            8
+    ##  9 Con8                8               0            8
+    ## 10 Con8                8               0            8
     ## # ℹ 39 more rows
 
 ``` r
@@ -174,6 +191,25 @@ select(litters_df, group, litter_id = litter_number)
     ##  8 Con8  #3/83/3-3      
     ##  9 Con8  #2/95/3        
     ## 10 Con8  #3/5/2/2/95    
+    ## # ℹ 39 more rows
+
+``` r
+select(litters_df, -starts_with("pups"))
+```
+
+    ## # A tibble: 49 × 5
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20
+    ##  2 Con7  #1/2/95/2             27          42            19
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20
+    ##  8 Con8  #3/83/3-3             NA          NA            20
+    ##  9 Con8  #2/95/3               NA          NA            20
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20
     ## # ℹ 39 more rows
 
 ``` r
@@ -291,23 +327,6 @@ Learning Assessment: In the pups data, select the columns containing
 litter number, sex, and PD ears.
 
 ``` r
-pups_df =
-  read_csv("data/FAS_pups.csv")
-```
-
-    ## Rows: 313 Columns: 6
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (1): Litter Number
-    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-pups_df =
-  janitor::clean_names(pups_df)
-
 select(pups_df, litter_number, sex, pd_ears)
 ```
 
